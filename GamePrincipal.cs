@@ -22,4 +22,8 @@ public class GamePrincipal : MonoBehaviour {
 	public void CloseGame(){
 		sceneUI.fim ();
 	}
+
+	public void StartGame(){
+		sceneUI.ChangeScene ("jogo");
+	}
 }

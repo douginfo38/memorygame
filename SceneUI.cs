@@ -18,6 +18,10 @@ public class SceneUI : MonoBehaviour {
 		case "selecao":
 			SceneManager.LoadScene (sceneName);
 			break;
+
+		case "jogo":
+			SceneManager.LoadScene (sceneName);
+			break;
 		}
 
 }
