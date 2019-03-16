@@ -9,9 +9,11 @@ public class GamePrincipal : MonoBehaviour {
 
 	private Randomize sorteio;
 	private Palavras tema;
+
+
 	//private List<int> listCards = new List<int>();
 	private ArrayList listCards = new ArrayList();
-	private string[] listaPalavras = new string[22];
+	private string[] listaPalavras = new string[24];
 
 	private int[] numeros; 
 	public Card[] cards;
@@ -19,15 +21,25 @@ public class GamePrincipal : MonoBehaviour {
 	public EventSystem events;
 	public GameObject GO; 
 
+	[Header("PONTUAÇÃO")]
+	public Text txtClicks;
+	public Text txtErros;
+	public Text txtAcertos;
+	private int clicks;
+	private int acertos;
+	private int erros;
+
 
 	void Start () {
+		clicks = 0;
+		acertos = 0;
+		erros = 0;
 		numeros = new int[5];
 		tema = GetComponent<Palavras>();
 		sceneUI = GetComponent < SceneUI>();
 		sorteio = GetComponent<Randomize>();
 		contCard = 0;
-		listCards = sorteio.SorteioSemRepeticaoVetor(0,11,11);
-
+		listCards = sorteio.SorteioSemRepeticaoVetor(0,25,12); //AUMENTAR PARA 47
 
 		//numeros = listCards.ToArray ();
 		int i = 0;
@@ -41,7 +53,7 @@ public class GamePrincipal : MonoBehaviour {
 				}
 
 				//Debug.Log (listCards [i].ToString ());
-				//Debug.Log (listaPalavras [i].ToString ());
+				Debug.Log (listaPalavras [i].ToString ());
 				i += 1;
 			}
 
@@ -67,36 +79,29 @@ public class GamePrincipal : MonoBehaviour {
 
 	public void ButtonClick(){
 		int auxId = int.Parse(events.currentSelectedGameObject.name);
-		int auxpal = (int)listCards [cardSelect1];
 
 		Debug.Log ("auxId ="+ auxId.ToString ());
 
 		if (cards [auxId].active == true) {
 			contCard += 1;
+			clicks += 1;
+			setClicks (clicks);
 
 			if (contCard == 1) {
 
 				cardSelect1 = auxId;
 				cards [cardSelect1].clickable = true;
-				if (cards [cardSelect1].id < 12) {
-					cards [cardSelect1].ChangeSprite (1, tema.paronimos1 [(int)listCards [cardSelect1]]);
-				} else {
-					cards [cardSelect1].ChangeSprite (1, tema.paronimos2 [(int)listCards [cardSelect1]]);
-				}
+				cards [cardSelect1].ChangeSprite (1,listaPalavras[cardSelect1]);
 				cards [cardSelect1].active = false;
 
 			} else if (contCard == 2) {
 
 				cardSelect2 = auxId;
 				cards [cardSelect2].clickable = true;
-				if (cards [cardSelect2].id < 12) {
-					cards [cardSelect2].ChangeSprite (1, tema.paronimos1 [(int)listCards [cardSelect2]]);
-				} else {
-					cards [cardSelect2].ChangeSprite (1, tema.paronimos2 [(int)listCards [cardSelect2]]);
-				}
+				cards [cardSelect2].ChangeSprite (1,listaPalavras[cardSelect2]);
 				cards [cardSelect2].active = false;
 				contCard = 0;
-				CheckAcertos (1);			
+				CheckAcertos (listaPalavras[cardSelect1],listaPalavras[cardSelect2]);			
 			} else {
 				Debug.Log ("AAA");
 			}
