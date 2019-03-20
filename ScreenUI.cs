@@ -37,6 +37,10 @@ public class ScreenUI : MonoBehaviour {
 	[SerializeField]
 	private Image final;
 
+	[Header("SCORE")]
+	[SerializeField]
+	private Image score;
+
 	[Header("NONE")]
 	[SerializeField]
 	private Image erro;
@@ -92,6 +96,10 @@ public class ScreenUI : MonoBehaviour {
 
 		case "final":
 			final.gameObject.SetActive (true);
+			break;
+
+		case "score":
+			score.gameObject.SetActive (true);
 			break;
 		}
 	}
